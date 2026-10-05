@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   OLUKA Studio — design tokens
+   Every color, type size, spacing, container width and motion value is
+   defined here once. Tailwind turns each token into utilities, e.g.
+   --color-bordo → bg-bordo / text-bordo, --text-h2 → text-h2,
+   --spacing-section → py-section, --container-site → max-w-site.
+   Breakpoints are Tailwind's mobile-first defaults: sm 40rem, md 48rem,
+   lg 64rem, xl 80rem, 2xl 96rem.
+   ========================================================================== */
+
+@theme {
+  /* Color — off-white ground, near-black type, dark burgundy accent */
+  --color-paper: #f5f2ec;
+  --color-paper-deep: #ebe6dd;
+  --color-ink: #141110;
+  --color-ink-soft: #1f1b19;
+  --color-mute: #6b645e;
+  --color-mute-on-dark: #a59d95;
+  --color-line: rgb(20 17 16 / 0.14);
+  --color-line-on-dark: rgb(245 242 236 / 0.16);
+  --color-bordo: #641526;
+  --color-bordo-deep: #4a0f1c;
+  --color-bordo-bright: #8f2a3d;
+
+  /* Placeholder tones for images without a file yet (photo atmosphere only) */
+  --color-tone-paper: #e4ddd2;
+  --color-tone-stone: #cbc2b6;
+  --color-tone-sepia: #9f8670;
+  --color-tone-ink: #26211f;
+  --color-tone-bordo: #43101b;
+
+  /* Type scale — fluid, from phone to large desktop */
+  --text-display: clamp(3.2rem, 1.2rem + 6.1vw, 9rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: clamp(2.9rem, 1.8rem + 4.4vw, 6.5rem);
+  --text-h1--line-height: 0.96;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(2.3rem, 1.5rem + 3.3vw, 5rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: clamp(1.8rem, 1.35rem + 1.7vw, 2.9rem);
+  --text-h3--line-height: 1.05;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h4: clamp(1.4rem, 1.2rem + 0.75vw, 1.85rem);
+  --text-h4--line-height: 1.15;
+  --text-lead: clamp(1.1rem, 1.02rem + 0.35vw, 1.35rem);
+  --text-lead--line-height: 1.55;
+  --text-label: 0.72rem;
+  --text-label--line-height: 1.4;
+  --tracking-label: 0.18em;
+  --tracking-wordmark: 0.2em;
+
+  /* Spacing */
+  --spacing-gutter: clamp(1.25rem, 0.7rem + 2.4vw, 3.25rem);
+  --spacing-section: clamp(6rem, 3.5rem + 8vw, 11.5rem);
+  --spacing-header: 4.5rem;
+
+  /* Layout */
+  --container-site: 92rem;
+  --container-prose: 40rem;
+
+  /* Borders and radius — sharp by default, hairlines everywhere */
+  --radius-xs: 2px;
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Font families come from next/font variables set on <html>. */
+@theme inline {
+  --font-serif: var(--font-bodoni), "Bodoni 72", Didot, Georgia, serif;
+  --font-sans: var(--font-hanken), "Helvetica Neue", Arial, sans-serif;
+}
+
+:root {
+  --duration-fast: 200ms;
+  --duration-base: 450ms;
+  --duration-slow: 900ms;
+}
+
+/* ---------------------------------------------------------------- base */
+
+@layer base {
+  html {
+    scroll-padding-top: var(--spacing-header);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-bordo text-paper;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-bordo);
+    outline-offset: 3px;
+  }
+
+  [data-theme="dark"] :focus-visible {
+    outline-color: var(--color-paper);
+  }
+}
+
+/* ---------------------------------------------------------------- utilities */
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-site);
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility label-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility hairline {
+  border-color: var(--color-line);
+}
+
+/* ---------------------------------------------------------------- motion
+   All motion is CSS-only and uses transform/opacity. Scroll-linked effects
+   use scroll-driven animations where supported; elsewhere content is simply
+   static. Nothing is hidden waiting for JavaScript. */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 2.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translate3d(0, 2rem, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes drift-slow {
+  to {
+    transform: translate3d(0, -6%, 0);
+  }
+}
+
+@keyframes drift-fast {
+  to {
+    transform: translate3d(0, -16%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero load-in: transform only, so the LCP image is painted immediately. */
+  .motion-settle {
+    animation: settle 1.6s var(--ease-out-soft) both;
+  }
+
+  .motion-rise {
+    animation: rise 1.2s var(--ease-out-soft) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+
+    .parallax-slow {
+      animation: drift-slow linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+
+    .parallax-fast {
+      animation: drift-fast linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}
+
+/* Services rail: native horizontal scroll, no scroll-jacking. */
+.rail {
+  --rail-inset: max(var(--spacing-gutter), calc((100vw - var(--container-site)) / 2 + var(--spacing-gutter)));
+  padding-inline: var(--rail-inset);
+  scroll-padding-inline: var(--rail-inset);
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
