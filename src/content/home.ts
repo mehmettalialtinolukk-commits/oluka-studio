@@ -12,34 +12,6 @@ export const hero = {
   primaryCta,
   secondaryCta: { label: "Çalışmalarımızı Keşfedin", href: "/#calismalar" } satisfies Link,
   keywords: ["Strateji", "Kreatif içerik", "Sosyal medya", "Video"],
-  // width/height keep the approved frame ratios of the layered composition
-  // (4:5, 4:3, 4:5); `position` picks the crop point inside each frame.
-  images: {
-    main: {
-      src: "/images/hero/hero-detail.png",
-      alt: "Ekranında OLUKA içerik ızgarası açık bir dizüstü bilgisayar, yanında fotoğraf makinesi ve basılı moodboard'lar",
-      width: 1200,
-      height: 1500,
-      position: "48% 50%",
-      tone: "sepia",
-    },
-    secondary: {
-      src: "/images/hero/hero-secondary.png",
-      alt: "Stüdyoda tripoda takılı telefonla OLUKA etiketli bir mumun dikey video çekimi",
-      width: 1400,
-      height: 1050,
-      position: "50% 40%",
-      tone: "ink",
-    },
-    detail: {
-      src: "/images/hero/hero-main-v2.png",
-      alt: "Bordo kadife ve kurutulmuş çiçeklerle düzenlenmiş bir masada OLUKA marka kartı, Instagram profili açık bir telefon ve renk paleti",
-      width: 800,
-      height: 1000,
-      position: "57% 50%",
-      tone: "stone",
-    },
-  } satisfies Record<string, MediaImage>,
 };
 
 export const servicesIntro: SectionIntro = {
