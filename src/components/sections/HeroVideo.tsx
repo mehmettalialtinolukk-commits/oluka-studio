@@ -14,15 +14,12 @@ const LOGO_BACKDROP = "#fefbf7";
 /** Share of the viewport width the logo may take once reframed. */
 const LOGO_FIT = 0.84;
 
-/** Below the lg breakpoint the cover crop cuts the logo, so it gets reframed. */
-const REFRAME_QUERY = "(max-width: 63.98rem)";
-
 /**
  * Hero background video. While the closing logo scene plays it marks the
  * hero with data-logo-scene so the copy can fade out instead of colliding
  * with the logo; the mark is cleared when the loop starts over.
- * On narrow screens it also zooms out and centres the logo during that
- * scene, then eases back to the normal crop when the loop restarts.
+ * During that scene it also centres the logo (zooming out where the crop
+ * would cut it), then eases back to the normal crop when the loop restarts.
  */
 export function HeroVideo({ src }: { src: string }) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -34,10 +31,10 @@ export function HeroVideo({ src }: { src: string }) {
     const section = video?.closest("section");
     if (!frame || !video || !section) return;
 
-    const narrow = window.matchMedia(REFRAME_QUERY);
     let reframed = false;
 
-    // Scale and offset that fit the whole logo inside the cover crop.
+    // Scale and offset that fit the whole logo inside the cover crop and
+    // centre it on the visible screen (the hero can be taller than the viewport).
     const logoFraming = () => {
       const { clientWidth: w, clientHeight: h } = frame;
       const cover = Math.max(w / SOURCE.width, h / SOURCE.height);
@@ -45,7 +42,8 @@ export function HeroVideo({ src }: { src: string }) {
       const scale = Math.min(1, (LOGO_FIT * w) / logoWidth);
       const offsetX = ((LOGO.left + LOGO.right) / 2 - SOURCE.width / 2) * cover;
       const offsetY = ((LOGO.top + LOGO.bottom) / 2 - SOURCE.height / 2) * cover;
-      return `translate(${-offsetX * scale}px, ${-offsetY * scale}px) scale(${scale})`;
+      const screenShiftY = (Math.min(h, window.innerHeight) - h) / 2;
+      return `translate(${-offsetX * scale}px, ${-offsetY * scale + screenShiftY}px) scale(${scale})`;
     };
 
     const applyFraming = (on: boolean) => {
@@ -58,13 +56,12 @@ export function HeroVideo({ src }: { src: string }) {
       const remaining = video.duration > 0 ? video.duration - video.currentTime : Infinity;
       section.toggleAttribute("data-logo-scene", remaining <= LOGO_SCENE_SECONDS);
 
-      const shouldReframe = narrow.matches && remaining <= LOGO_FRAME_SECONDS;
+      const shouldReframe = remaining <= LOGO_FRAME_SECONDS;
       if (shouldReframe !== reframed) applyFraming(shouldReframe);
     };
 
     const onResize = () => {
-      if (reframed && !narrow.matches) applyFraming(false);
-      else if (reframed) video.style.transform = logoFraming();
+      if (reframed) video.style.transform = logoFraming();
     };
 
     video.addEventListener("timeupdate", update);
@@ -80,10 +77,11 @@ export function HeroVideo({ src }: { src: string }) {
 
   return (
     // The video box is the full 16:9 cover size (not object-cover), so zooming out reveals what the crop hid.
+    // The clip hides the 1px black columns on the source's left and right edges once the logo scene shifts them into view.
     <div ref={frameRef} className="absolute inset-0 overflow-hidden transition-[background-color] duration-(--duration-slow) ease-editorial [container-type:size]">
       <video
         ref={ref}
-        className="absolute left-1/2 top-1/2 h-[max(100cqh,calc(100cqw*9/16))] w-[max(100cqw,calc(100cqh*16/9))] max-w-none -translate-x-1/2 -translate-y-1/2 transition-transform duration-(--duration-slow) ease-editorial"
+        className="absolute left-1/2 top-1/2 h-[max(100cqh,calc(100cqw*9/16))] w-[max(100cqw,calc(100cqh*16/9))] max-w-none -translate-x-1/2 -translate-y-1/2 transition-transform [clip-path:inset(0_2px)] duration-(--duration-slow) ease-editorial"
         src={src}
         autoPlay
         muted
