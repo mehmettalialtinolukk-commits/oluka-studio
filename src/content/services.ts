@@ -11,7 +11,6 @@ export const services: Service[] = [
     summary: "Hesaplarınızı planlı, tutarlı ve markanıza yakışan bir dille yönetiyoruz.",
     deliverables: ["İçerik takvimi", "Paylaşım ve topluluk yönetimi", "Dönemsel değerlendirme"],
     image: {
-      src: "/services/service-social-media.png",
       alt: "Gün ışığı alan bir masada haftalık içerik takvimi, OLUKA sosyal medya akışı açık bir telefon, dizüstü bilgisayar ve strateji notları",
       width: 1200,
       height: 1500,
@@ -25,7 +24,6 @@ export const services: Service[] = [
     summary: "İlk saniyeden dikkat çeken, ritmi ve hikâyesi olan dikey videolar.",
     deliverables: ["Konsept ve senaryo", "Çekim yönetimi", "Dikey formatta kurgu"],
     image: {
-      src: "/services/service-reels.png",
       alt: "Stüdyoda tripoda takılı telefonla dikey video çekimi; yanında ışık kutusu, OLUKA logolu kupa, kurgu programı açık dizüstü bilgisayar ve Reels planı defteri",
       width: 1200,
       height: 1500,
@@ -39,7 +37,6 @@ export const services: Service[] = [
     summary: "Gerçek içerik üreticileriyle samimi ve güven veren marka anlatımları.",
     deliverables: ["İçerik üreticisi eşleştirme", "Brief ve yönlendirme", "Kullanım hakları planı"],
     image: {
-      src: "/services/service-ugc.png",
       alt: "Gün ışığı alan bir çalışma masasında elindeki cilt bakım tüpünü inceleyen içerik üretici; önde halka ışığa takılı telefon çekimi kaydediyor",
       width: 1200,
       height: 1500,
