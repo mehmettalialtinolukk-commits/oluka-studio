@@ -40,7 +40,12 @@ export async function Services() {
   const services = await getServices();
 
   return (
-    <section id={servicesIntro.id} aria-labelledby={`${servicesIntro.id}-baslik`} className="py-section">
+    // scroll-mt: anchor links land with the title block 30px below the fixed header, not on the section's top padding.
+    <section
+      id={servicesIntro.id}
+      aria-labelledby={`${servicesIntro.id}-baslik`}
+      className="scroll-mt-[calc(1.875rem-var(--spacing-section))] py-section"
+    >
       <div className="container-site">
         <SectionHeader intro={servicesIntro} className="reveal mb-16 lg:mb-20" />
       </div>
