@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 
 import { ButtonLink } from "@/components/ui/Button";
 import { Wordmark } from "@/components/ui/Wordmark";
@@ -58,6 +58,19 @@ export function SiteHeader({ navigation, cta, channels }: SiteHeaderProps) {
     setOpen(false);
     if (returnFocus) toggleRef.current?.focus();
   }, []);
+
+  // Next.js does not scroll when a link's hash is already the current one, so a
+  // second click on e.g. "Hizmetler" did nothing. Scroll to the section ourselves;
+  // scrollIntoView keeps the CSS smooth-scroll and scroll-margin/padding offsets.
+  // The frame delay lets the mobile menu release its scroll lock first.
+  const rescrollSameHash = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    const url = new URL(href, window.location.href);
+    if (!url.hash || url.pathname !== window.location.pathname || url.hash !== window.location.hash) return;
+    const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+    if (!target) return;
+    event.preventDefault();
+    requestAnimationFrame(() => target.scrollIntoView());
+  };
 
   // Mobile menu: lock page scroll, close on Escape, keep focus inside, close on desktop resize.
   useEffect(() => {
@@ -119,6 +132,7 @@ export function SiteHeader({ navigation, cta, channels }: SiteHeaderProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={(e) => rescrollSameHash(e, item.href)}
                   className="relative py-2 text-[0.92rem] after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-(--duration-base) after:ease-editorial hover:after:scale-x-100"
                 >
                   {item.label}
@@ -168,7 +182,10 @@ export function SiteHeader({ navigation, cta, channels }: SiteHeaderProps) {
                 <li key={item.href} className="border-b border-line">
                   <Link
                     href={item.href}
-                    onClick={() => close(false)}
+                    onClick={(e) => {
+                      close(false);
+                      rescrollSameHash(e, item.href);
+                    }}
                     data-menu-focus
                     {...(i === 0 && { "data-menu-first": true })}
                     className="flex items-baseline justify-between py-5 font-serif text-h3"
