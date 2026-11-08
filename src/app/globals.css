@@ -228,9 +228,11 @@
   }
 }
 
-/* Services rail: native horizontal scroll, no scroll-jacking. */
+/* Services rail: native horizontal scroll, no scroll-jacking.
+   100% (not 100vw) so the first card lines up with .container-site even when a
+   classic scrollbar takes up page width. */
 .rail {
-  --rail-inset: max(var(--spacing-gutter), calc((100vw - var(--container-site)) / 2 + var(--spacing-gutter)));
+  --rail-inset: max(var(--spacing-gutter), calc((100% - var(--container-site)) / 2 + var(--spacing-gutter)));
   padding-inline: var(--rail-inset);
   scroll-padding-inline: var(--rail-inset);
   scroll-snap-type: x mandatory;
