@@ -72,11 +72,19 @@ export type CaseStudy = {
   summary: string;
   /** Short scope list shown in the project facts. */
   scope: string[];
+  /** Page atmosphere: "dark" turns the card and detail page into the dark luxury variant. */
+  theme: "light" | "dark";
   cover: MediaImage;
   coverCaption: string;
+  storyTitle: string;
   story: string[];
+  approachTitle: string;
   approach: { title: string; description: string }[];
+  /** Optional social media concept block (idea + content pillars). */
+  socialConcept?: { title: string; description: string; pillars: { title: string; description: string }[] };
   gallery: { image: MediaImage; caption: string }[];
+  /** Closing headline; `emphasis` renders in italic accent colour. */
+  closing: { before: string; emphasis: string; after: string };
   seo: { title: string; description: string };
 };
 

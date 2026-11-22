@@ -23,6 +23,8 @@
   --color-bordo: #641526;
   --color-bordo-deep: #4a0f1c;
   --color-bordo-bright: #8f2a3d;
+  /* Accent for dark luxury case studies (e.g. NOIR COFFEE) */
+  --color-copper: #c08a5b;
 
   /* Placeholder tones for images without a file yet (photo atmosphere only) */
   --color-tone-paper: #e4ddd2;
