@@ -104,10 +104,14 @@ export const process = {
 
 export const about = {
   intro: { id: "hakkimizda", label: "Hakkımızda", title: "" } satisfies SectionIntro,
-  statement:
-    "OLUKA Studio, markaların sosyal medyada yalnızca var olmasını değil, bir his bırakmasını önemseyen bir kreatif içerik stüdyosu.",
-  body:
-    "Seçici çalışıyoruz. Her markaya, kendi hikâyesine yetecek kadar zaman ve dikkat ayırıyoruz. Strateji, üretim ve yönetimi tek bir bakış açısıyla bir araya getiriyoruz.",
+  statement: "Sıradanın ötesinde düşünürüz.",
+  body: [
+    "OLUKA Studio, yaratıcı fikirleri güçlü dijital deneyimlere dönüştürmek için yola çıkan bağımsız bir kreatif stüdyodur.",
+    "Markaların yalnızca görünür olmasını değil, kendilerine özgü bir kimlikle hatırlanmasını hedefliyoruz.",
+    "Strateji, tasarım ve teknolojiyi bir araya getirerek her markanın hikâyesine özel çözümler geliştiriyoruz.",
+  ],
+  /** Closing line; `emphasis` renders in the italic accent style. */
+  closing: { text: "Çünkü iyi bir marka yalnızca görülmez.", emphasis: "İz bırakır." },
   values: [
     { title: "Özgünlük", description: "Şablon değil, markanıza ait bir dil." },
     { title: "Tutarlılık", description: "Her paylaşımda aynı özen, aynı ses." },
