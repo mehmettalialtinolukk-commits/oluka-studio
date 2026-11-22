@@ -67,11 +67,12 @@ export const services: Service[] = [
     summary: "Ne paylaşacağınızı, kime ve neden paylaşacağınızı netleştiren bir yol haritası.",
     deliverables: ["Kitle ve rakip analizi", "İçerik sütunları", "Format ve ton rehberi"],
     image: {
-      alt: "Duvara asılmış içerik planı kartları ve notlar",
+      src: "/services/05-icerik-stratejisi.jpg",
+      alt: "Masa lambasının ışığında, dizüstü bilgisayar ve açık bir dergi başında içerik planı üzerine gülümseyerek çalışan iki kişi",
       width: 1200,
       height: 1500,
+      position: "50% 25%",
       tone: "stone",
-      note: "Moodboard duvarı, kağıt dokusu",
     },
   },
   {
@@ -80,11 +81,12 @@ export const services: Service[] = [
     summary: "Ham görüntüyü, markanızın ritmine uygun yayına hazır bir anlatıya dönüştürüyoruz.",
     deliverables: ["Kurgu ve ritim", "Renk ve ses düzenleme", "Altyazı ve format uyarlama"],
     image: {
-      alt: "Kurgu masasında zaman çizelgesi üzerinde çalışılan bir video",
+      src: "/services/06-video-edit.jpg",
+      alt: "Bordo ışıklı loş kurgu odasında, iki monitörde renk düzenleme ve kurgu ekranlarıyla çalışan bir editör",
       width: 1200,
       height: 1500,
+      position: "50% 30%",
       tone: "ink",
-      note: "Kurgu ekranı, loş oda, detay",
     },
   },
   {
@@ -93,11 +95,12 @@ export const services: Service[] = [
     summary: "Feed, story ve kampanya görsellerinde tutarlı ve rafine bir görsel dil.",
     deliverables: ["Görsel kimlik uyarlaması", "Şablon ve grid sistemi", "Kampanya tasarımları"],
     image: {
-      alt: "Masada basılı sosyal medya tasarımları ve renk örnekleri",
+      src: "/services/07-sosyal-medya-tasarimlari.jpg",
+      alt: "Mermer masada dergilerin üzerinde duran bir fotoğraf makinesi ve ekranında sosyal medya akışı açık bir dizüstü bilgisayar",
       width: 1200,
       height: 1500,
+      position: "50% 50%",
       tone: "paper",
-      note: "Baskı provaları, kağıt ve renk kartelası",
     },
   },
   {
@@ -106,11 +109,12 @@ export const services: Service[] = [
     summary: "Ekibinizin içerik üretimini yönlendiren bir sistem ve dış bakış açısı.",
     deliverables: ["İçerik sistemi kurulumu", "Ekip eğitimi ve atölye", "Düzenli danışmanlık"],
     image: {
-      alt: "Toplantı masasında marka içerik sistemi üzerine konuşan iki kişi",
+      src: "/services/08-marka-danismanligi.jpg",
+      alt: "Ahşap toplantı masasında dizüstü bilgisayarlar, tablet ve defterlerle marka içerik planını konuşan bir ekip, yukarıdan görünüm",
       width: 1200,
       height: 1500,
+      position: "50% 25%",
       tone: "sepia",
-      note: "Sakin toplantı anı, eller ve defter",
     },
   },
 ];
