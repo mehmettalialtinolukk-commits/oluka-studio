@@ -23,7 +23,7 @@ export default async function ContactPage() {
             Projenizi <em className="font-normal italic text-bordo">konuşalım.</em>
           </h1>
           <p className="mt-8 max-w-[38ch] text-lead text-mute">
-            Markanızı ve hedeflerinizi birkaç cümleyle anlatın. Talebinizi inceleyip size özel bir içerik yaklaşımıyla dönüş yapalım.
+            Her güçlü marka, iyi bir fikirle başlar. Projenizi anlatın, birlikte nasıl fark yaratabileceğimizi keşfedelim.
           </p>
 
           {channels.length > 0 && (
