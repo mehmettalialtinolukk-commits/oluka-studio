@@ -58,6 +58,28 @@ export type Project = {
   featured?: boolean;
 };
 
+/**
+ * Showcase project with its own detail page (/projeler/[slug]).
+ * "concept" case studies are fictional brands made to show OLUKA's approach;
+ * the site labels them "Konsept Proje" and never shows client names or results.
+ */
+export type CaseStudy = {
+  slug: string;
+  brand: string;
+  status: "concept" | "client";
+  category: string;
+  tagline: string;
+  summary: string;
+  /** Short scope list shown in the project facts. */
+  scope: string[];
+  cover: MediaImage;
+  coverCaption: string;
+  story: string[];
+  approach: { title: string; description: string }[];
+  gallery: { image: MediaImage; caption: string }[];
+  seo: { title: string; description: string };
+};
+
 export type Expertise = {
   slug: string;
   title: string;

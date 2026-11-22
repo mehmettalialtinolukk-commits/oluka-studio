@@ -3,6 +3,7 @@ import { Expertise } from "@/components/sections/Expertise";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Hero } from "@/components/sections/Hero";
 import { Process } from "@/components/sections/Process";
+import { SelectedProjects } from "@/components/sections/SelectedProjects";
 import { Services } from "@/components/sections/Services";
 import { Why } from "@/components/sections/Why";
 import { Work } from "@/components/sections/Work";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <Hero />
       <Services />
       <Expertise />
+      <SelectedProjects />
       <Work />
       <Why />
       <Process />

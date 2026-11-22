@@ -5,10 +5,11 @@
  * local data; to connect a CMS later, replace the bodies with CMS queries that
  * return the same types. Nothing in the components needs to change.
  */
+import { caseStudies } from "@/content/case-studies";
 import { expertiseAreas, expertiseIntro } from "@/content/expertise";
 import { projectCategories, projects } from "@/content/projects";
 import { services } from "@/content/services";
-import type { Project, ProjectCategory, Service } from "@/content/types";
+import type { CaseStudy, Project, ProjectCategory, Service } from "@/content/types";
 
 export async function getServices(): Promise<Service[]> {
   return services;
@@ -31,4 +32,12 @@ export async function getUsedProjectCategories(): Promise<ProjectCategory[]> {
 
 export async function getProjectCategories(): Promise<ProjectCategory[]> {
   return projectCategories;
+}
+
+export async function getCaseStudies(): Promise<CaseStudy[]> {
+  return caseStudies;
+}
+
+export async function getCaseStudy(slug: string): Promise<CaseStudy | undefined> {
+  return caseStudies.find((c) => c.slug === slug);
 }
