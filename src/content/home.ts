@@ -76,28 +76,56 @@ export const process = {
       title: "Tanışma",
       description:
         "Markanızı, hedeflerinizi ve beklentilerinizi dinliyoruz. Mevcut hesaplarınızı ve sektörünüzü birlikte inceliyoruz.",
-      image: { alt: "Bir kafede defter ve kahveyle yapılan tanışma görüşmesi", width: 800, height: 600, tone: "sepia" },
+      image: {
+        src: "/images/process/01-tanisma.jpg",
+        alt: "Aydınlık bir toplantı odasında, masa başında tokalaşan iki kişi ve görüşmeye katılan ekip",
+        width: 800,
+        height: 600,
+        position: "50% 80%",
+        tone: "sepia",
+      },
     },
     {
       number: "02",
       title: "Strateji",
       description:
         "İçerik yönünü, formatları, tonu ve yayın planını belirliyoruz. Her kararın gerekçesini sizinle paylaşıyoruz.",
-      image: { alt: "Masada yan yana dizilmiş içerik planı sayfaları", width: 800, height: 600, tone: "paper" },
+      image: {
+        src: "/images/process/02-strateji.jpg",
+        alt: "Masada OLUKA logolu dosya, Strateji Planı notu, kalemler ve kahve; kalemle plan üzerinde gösterilen noktalar",
+        width: 800,
+        height: 600,
+        position: "50% 50%",
+        tone: "paper",
+      },
     },
     {
       number: "03",
       title: "Üretim",
       description:
         "Çekim, UGC, AI UGC, kurgu ve tasarım. İçerikleri onayınıza sunuyor, geri bildirimlerle son haline getiriyoruz.",
-      image: { alt: "Çekim setinde ışık ayarı yapan bir görüntü yönetmeni", width: 800, height: 600, tone: "ink" },
+      image: {
+        src: "/images/process/03-uretim.jpg",
+        alt: "Beyaz fonlu çekim stüdyosunda ışık ekipmanlarının arasında elinde fotoğraf makinesiyle duran bir fotoğrafçı",
+        width: 800,
+        height: 600,
+        position: "50% 66%",
+        tone: "ink",
+      },
     },
     {
       number: "04",
       title: "Yayın & Optimizasyon",
       description:
         "İçerikleri yayına alıyor, etkileşimi takip ediyor ve öğrendiklerimizle bir sonraki dönemi şekillendiriyoruz.",
-      image: { alt: "Telefon ekranında yayınlanmış bir içeriğe gelen yorumlar", width: 800, height: 600, tone: "stone" },
+      image: {
+        src: "/images/process/04-optimizasyon.jpg",
+        alt: "Dizüstü bilgisayar ekranında performans özeti grafiklerini inceleyen bir kişi; masada basılı rapor",
+        width: 800,
+        height: 600,
+        position: "50% 40%",
+        tone: "stone",
+      },
     },
   ] satisfies ProcessStep[],
 };
