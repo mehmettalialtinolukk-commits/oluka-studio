@@ -8,7 +8,7 @@ import { primaryCta } from "@/content/home";
 import { mainNavigation, pageSeo } from "@/content/site";
 import { getContactChannels } from "@/lib/channels";
 import { getServices } from "@/lib/content";
-import { organizationJsonLd, serializeJsonLd, websiteJsonLd } from "@/lib/seo";
+import { defaultShareImage, organizationJsonLd, serializeJsonLd, websiteJsonLd } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -33,7 +33,9 @@ export const metadata: Metadata = {
   title: { default: pageSeo.home.title, template: `%s | ${siteConfig.name}` },
   description: pageSeo.home.description,
   applicationName: siteConfig.name,
-  openGraph: { siteName: siteConfig.name, locale: siteConfig.locale, type: "website" },
+  // Fallback for routes without page metadata (e.g. 404); pages set their own via buildMetadata.
+  openGraph: { siteName: siteConfig.name, locale: siteConfig.locale, type: "website", images: [defaultShareImage] },
+  twitter: { card: "summary_large_image", images: [defaultShareImage] },
   formatDetection: { telephone: false, email: false, address: false },
   robots: siteConfig.indexable ? { index: true, follow: true } : { index: false, follow: true },
 };

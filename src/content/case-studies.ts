@@ -79,6 +79,7 @@ export const caseStudies: CaseStudy[] = [
     closing: { before: "Markanız için de ", emphasis: "bir imza", after: " kuralım." },
     seo: {
       title: "MAISON VÉRA — Konsept Proje",
+      ogImage: "/og/maison-vera.jpg",
       description:
         "MAISON VÉRA: OLUKA Studio'nun marka kimliği ve kreatif prodüksiyon yaklaşımını gösteren konsept parfüm markası projesi. Kimlik, kampanya ve ambalaj tasarımı.",
     },
@@ -156,6 +157,7 @@ export const caseStudies: CaseStudy[] = [
     closing: { before: "Markanız için de ", emphasis: "bir ritüel", after: " kuralım." },
     seo: {
       title: "NOIR COFFEE — Konsept Proje",
+      ogImage: "/og/noir-coffee.jpg",
       description:
         "NOIR COFFEE: OLUKA Studio'nun sosyal medya ve kreatif içerik yaklaşımını gösteren konsept kahve markası projesi. Ürün çekimleri, espresso anları ve feed kurgusu.",
     },

@@ -1,12 +1,27 @@
 import type { Metadata } from "next";
 
 import { absoluteUrl, siteConfig } from "@/config/site";
+import { hero } from "@/content/home";
 import type { PageSeo, Service } from "@/content/types";
+
+/** Share image size used for every page (Open Graph / Twitter recommended format). */
+const SHARE_IMAGE_SIZE = { width: 1200, height: 630 };
+
+/** Typographic OLUKA card (src/app/og-kart) for pages without their own share photo. */
+export const defaultShareImage = {
+  url: "/og-kart",
+  ...SHARE_IMAGE_SIZE,
+  type: "image/png",
+  alt: `${siteConfig.name} — ${hero.eyebrow}`,
+};
 
 /** Builds page metadata (title, description, canonical, Open Graph, Twitter) from content. */
 export function buildMetadata(page: PageSeo): Metadata {
   const isHome = page.path === "/";
-  const images = page.ogImage ? [{ url: page.ogImage }] : undefined;
+  // Set explicitly on every page: a page-level openGraph object replaces the layout's, images included.
+  const images = [
+    page.ogImage ? { url: page.ogImage, ...SHARE_IMAGE_SIZE, alt: page.ogImageAlt ?? page.title } : defaultShareImage,
+  ];
   const noindex = page.noindex || !siteConfig.indexable;
 
   return {
@@ -21,13 +36,13 @@ export function buildMetadata(page: PageSeo): Metadata {
       url: page.path,
       title: isHome ? page.title : `${page.title} | ${siteConfig.name}`,
       description: page.description,
-      ...(images && { images }),
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title: isHome ? page.title : `${page.title} | ${siteConfig.name}`,
       description: page.description,
-      ...(images && { images }),
+      images,
     },
     robots: noindex ? { index: false, follow: true } : { index: true, follow: true },
   };

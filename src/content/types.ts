@@ -85,7 +85,8 @@ export type CaseStudy = {
   gallery: { image: MediaImage; caption: string }[];
   /** Closing headline; `emphasis` renders in italic accent colour. */
   closing: { before: string; emphasis: string; after: string };
-  seo: { title: string; description: string };
+  /** `ogImage`: 1200×630 share image under /public; the cover alt text is used for it. */
+  seo: { title: string; description: string; ogImage?: string };
 };
 
 export type Expertise = {
@@ -118,7 +119,9 @@ export type PageSeo = {
   title: string;
   description: string;
   path: string;
-  /** Optional custom share image under /public; defaults to the generated one. */
+  /** Optional share image under /public, prepared at 1200×630; defaults to the OLUKA card (/og-kart). */
   ogImage?: string;
+  /** Alt text for `ogImage`. */
+  ogImageAlt?: string;
   noindex?: boolean;
 };

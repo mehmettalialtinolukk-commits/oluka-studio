@@ -39,6 +39,9 @@ export const pageSeo = {
     description:
       "OLUKA Studio; sosyal medya yönetimi, Reels, UGC, AI UGC ve içerik stratejisiyle markaların yalnızca görünmesini değil, hatırlanmasını sağlar.",
     path: "/",
+    ogImage: "/og/ana-sayfa.jpg",
+    ogImageAlt:
+      "Akşam ışığında taş masada, ekranında OLUKA yazan dizüstü bilgisayar, fotoğraf makinesi, bordo tonlu baskılar ve kurutulmuş çiçekler",
   },
   contact: {
     title: "İletişim",

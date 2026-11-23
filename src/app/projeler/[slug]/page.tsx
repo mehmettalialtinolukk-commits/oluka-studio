@@ -22,7 +22,7 @@ export async function generateMetadata(props: PageProps<"/projeler/[slug]">): Pr
   const { slug } = await props.params;
   const cs = await getCaseStudy(slug);
   if (!cs) return {};
-  return buildMetadata({ ...cs.seo, path: `/projeler/${cs.slug}`, ogImage: cs.cover.src });
+  return buildMetadata({ ...cs.seo, path: `/projeler/${cs.slug}`, ogImageAlt: cs.cover.alt });
 }
 
 /** Colour roles per page atmosphere. "light" is the default OLUKA palette; "dark" is the dark luxury variant. */
