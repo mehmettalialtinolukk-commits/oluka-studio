@@ -80,7 +80,7 @@ export async function Work() {
   return (
     <section id={workIntro.id} aria-labelledby={`${workIntro.id}-baslik`} className="py-section">
       <div className="container-site">
-        <SectionHeader intro={workIntro} className="reveal mb-14 lg:mb-20" />
+        <SectionHeader intro={workIntro} className="reveal mb-10 sm:mb-14 lg:mb-20" />
         <WorkFilter categories={categories} items={items} />
       </div>
     </section>
