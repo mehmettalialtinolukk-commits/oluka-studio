@@ -30,8 +30,13 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
               <ArrowIcon />
             </Link>
           </div>
-          <div className="hidden lg:col-span-3 lg:col-start-10 lg:block">
-            <EditorialImage image={footer.image} sizes="20vw" className="mt-8 w-full" />
+          {/* Phones and tablets: below the brand copy, in the photo's own 2:3 ratio (no crop). Desktop keeps its frame. */}
+          <div className="lg:col-span-3 lg:col-start-10">
+            <EditorialImage
+              image={footer.image}
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 60vw"
+              className="w-3/5 max-lg:aspect-[2/3]! sm:w-2/5 lg:mt-8 lg:w-full"
+            />
           </div>
         </div>
 
