@@ -66,11 +66,10 @@ export const projects: Project[] = [
     categories: ["e-lojistik", "reels-video"],
     services: ["reels-short-form-video", "video-edit"],
     cover: {
-      alt: "Sabah saatlerinde paketleri teslimat aracına yükleyen bir kurye",
+      src: "/portfolio/son-kilometre.jpg",
+      alt: "Koli dolu yüksek raflar arasında, tavan ışıklarıyla aydınlanan uzun ve simetrik bir depo koridoru",
       width: 1200,
       height: 1500,
-      tone: "ink",
-      note: "Şafak ışığı, depo kapısı, hareket",
     },
   },
   {
