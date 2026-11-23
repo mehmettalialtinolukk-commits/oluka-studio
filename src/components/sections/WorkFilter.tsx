@@ -7,7 +7,7 @@ import type { ProjectCategory } from "@/content/types";
 type WorkFilterProps = {
   categories: ProjectCategory[];
   /** Pre-rendered project cards with the category slugs they belong to. */
-  items: { slug: string; categories: string[]; featured: boolean; node: ReactNode }[];
+  items: { slug: string; categories: string[]; featured: boolean; landscape: boolean; node: ReactNode }[];
 };
 
 /**
@@ -17,6 +17,7 @@ type WorkFilterProps = {
 export function WorkFilter({ categories, items }: WorkFilterProps) {
   const [active, setActive] = useState<string | null>(null);
   const visible = items.filter((item) => !active || item.categories.includes(active));
+  const rest = visible.filter((item) => !item.featured);
   const chip = (selected: boolean) =>
     `min-h-11 cursor-pointer border px-5 text-sm transition-colors duration-(--duration-base) ease-editorial ${
       selected ? "border-ink bg-ink text-paper" : "border-line hover:border-ink"
@@ -41,7 +42,7 @@ export function WorkFilter({ categories, items }: WorkFilterProps) {
       </p>
       <ul className="grid gap-x-8 gap-y-24 lg:grid-cols-12 lg:gap-y-32">
         {visible.map((item) => (
-          <li key={item.slug} className={item.featured ? "lg:col-span-12" : layoutFor(visible.filter((v) => !v.featured).indexOf(item))}>
+          <li key={item.slug} className={item.featured ? "lg:col-span-12" : layoutFor(rest.indexOf(item), rest.length, item.landscape)}>
             {item.node}
           </li>
         ))}
@@ -51,7 +52,10 @@ export function WorkFilter({ categories, items }: WorkFilterProps) {
 }
 
 /** Asymmetric editorial rhythm for non-featured projects: offset pairs. */
-function layoutFor(index: number): string {
+function layoutFor(index: number, count: number, landscape: boolean): string {
+  // A landscape card alone on the last row gets a wider, centred slot so its
+  // shorter frame carries the same visual weight as the portrait cards.
+  if (landscape && index === count - 1 && index % 2 === 0) return "lg:col-span-8 lg:col-start-3";
   const pattern = ["lg:col-span-5", "lg:col-span-5 lg:col-start-8 lg:mt-40", "lg:col-span-6 lg:col-start-2", "lg:col-span-4 lg:col-start-9 lg:mt-24"];
   return pattern[index % pattern.length];
 }

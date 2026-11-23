@@ -29,7 +29,8 @@ export function ProjectCard({
       <div className={`overflow-hidden ${featured ? "lg:col-span-8" : ""}`}>
         <EditorialImage
           image={project.cover}
-          sizes={featured ? "(min-width: 1024px) 62vw, 92vw" : "(min-width: 1024px) 42vw, 92vw"}
+          // Landscape covers can take the wide slot (see WorkFilter), so request the larger size.
+          sizes={featured || project.cover.width > project.cover.height ? "(min-width: 1024px) 62vw, 92vw" : "(min-width: 1024px) 42vw, 92vw"}
           className="w-full"
           imageClassName="transition-transform duration-(--duration-slow) ease-editorial group-hover:scale-[1.02]"
         />
@@ -65,6 +66,7 @@ export async function Work() {
     slug: project.slug,
     categories: project.categories,
     featured: Boolean(project.featured),
+    landscape: project.cover.width > project.cover.height,
     node: (
       <ProjectCard
         project={project}
