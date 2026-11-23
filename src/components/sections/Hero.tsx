@@ -9,9 +9,10 @@ export function Hero() {
       data-theme="dark"
       className="group/hero relative isolate flex min-h-svh flex-col overflow-hidden bg-ink pb-8 pt-[calc(var(--spacing-header)+3rem)] text-paper lg:pb-10"
     >
-      {/* Background video: decorative and muted so browsers allow autoplay. bg-ink shows until it loads. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 motion-reduce:hidden">
-        <HeroVideo src="/OLUKA_Studio_Hero_Web.mp4" />
+      {/* Background video: decorative and muted so browsers allow autoplay. The poster (first frame) shows until it
+          plays, and stays on its own when motion is reduced or data saving is on. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <HeroVideo src="/video/hero-1080.mp4" mobileSrc="/video/hero-720.mp4" poster="/video/hero-poster.webp" />
         {/* Light scrims only where copy sits: header band on top, reading side on the left. */}
         <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-ink/45 to-transparent" />
         <div className="absolute inset-0 bg-linear-to-r from-ink/75 via-ink/55 to-ink/30 lg:from-ink/70 lg:via-ink/25 lg:via-40% lg:to-transparent lg:to-65%" />

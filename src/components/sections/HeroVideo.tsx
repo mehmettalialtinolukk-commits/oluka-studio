@@ -14,14 +14,37 @@ const LOGO_BACKDROP = "#fefbf7";
 /** Share of the viewport width the logo may take once reframed. */
 const LOGO_FIT = 0.84;
 
+/** Screens up to this width get the lighter 720p file. */
+const MOBILE_QUERY = "(max-width: 767px)";
+
+type HeroVideoProps = {
+  /** 1080p file for tablets and desktops. */
+  src: string;
+  /** Lighter 720p file for phones (same cut and timing). */
+  mobileSrc: string;
+  /** First frame of the video, shown while it loads and instead of it when motion is reduced or data saving is on. */
+  poster: string;
+};
+
+/** True when the visitor asked for less motion or less data; the video is then never requested. */
+function prefersStill(): boolean {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return connection?.saveData === true;
+}
+
 /**
  * Hero background video. While the closing logo scene plays it marks the
  * hero with data-logo-scene so the copy can fade out instead of colliding
  * with the logo; the mark is cleared when the loop starts over.
  * During that scene it also centres the logo (zooming out where the crop
  * would cut it), then eases back to the normal crop when the loop restarts.
+ *
+ * The file is chosen in the browser (720p on phones, 1080p elsewhere), so the
+ * server HTML carries only the poster and nothing is downloaded for visitors
+ * who prefer reduced motion or have data saving turned on.
  */
-export function HeroVideo({ src }: { src: string }) {
+export function HeroVideo({ src, mobileSrc, poster }: HeroVideoProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -30,6 +53,7 @@ export function HeroVideo({ src }: { src: string }) {
     const video = ref.current;
     const section = video?.closest("section");
     if (!frame || !video || !section) return;
+    if (prefersStill()) return;
 
     let reframed = false;
 
@@ -67,13 +91,23 @@ export function HeroVideo({ src }: { src: string }) {
     video.addEventListener("timeupdate", update);
     video.addEventListener("seeked", update);
     window.addEventListener("resize", onResize);
+
+    // Pick the file once; a later resize keeps the one already playing.
+    video.src = window.matchMedia(MOBILE_QUERY).matches ? mobileSrc : src;
+    video.play().catch(() => {
+      // Autoplay refused (e.g. low-power mode): the poster stays in place.
+    });
+
     return () => {
       video.removeEventListener("timeupdate", update);
       video.removeEventListener("seeked", update);
       window.removeEventListener("resize", onResize);
       section.removeAttribute("data-logo-scene");
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
     };
-  }, []);
+  }, [src, mobileSrc]);
 
   return (
     // The video box is the full 16:9 cover size (not object-cover), so zooming out reveals what the crop hid.
@@ -82,7 +116,7 @@ export function HeroVideo({ src }: { src: string }) {
       <video
         ref={ref}
         className="absolute left-1/2 top-1/2 h-[max(100cqh,calc(100cqw*9/16))] w-[max(100cqw,calc(100cqh*16/9))] max-w-none -translate-x-1/2 -translate-y-1/2 transition-transform [clip-path:inset(0_2px)] duration-(--duration-slow) ease-editorial"
-        src={src}
+        poster={poster}
         autoPlay
         muted
         loop
