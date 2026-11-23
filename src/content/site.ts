@@ -24,11 +24,11 @@ export const legalNavigation: Link[] = [
 export const footer = {
   tagline: "Premium sosyal medya ve kreatif içerik stüdyosu.",
   image: {
-    alt: "Akşam ışığında bir şehir sokağının yumuşak odaklı görüntüsü",
+    src: "/images/expertise/isterseniz-footer.jpg",
+    alt: "Tramvay rayları ve üst geçidiyle akşam ışığında bir şehir caddesi",
     width: 900,
     height: 1100,
-    tone: "bordo" as const,
-    note: "Footer görseli: atmosferik, düşük kontrast",
+    position: "50% 45%",
   },
 };
 

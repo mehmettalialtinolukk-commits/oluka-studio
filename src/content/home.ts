@@ -55,11 +55,11 @@ export const why = {
     },
   ] satisfies Value[],
   image: {
-    alt: "Stüdyoda içerik çekimine hazırlanan ekip, ışık ve kamera düzeni",
+    src: "/images/expertise/neden-oluka-studyo.jpg",
+    alt: "Softbox ışıkları ve tripodlarla kurulmuş beyaz fonlu çekim stüdyosunda hazırlık yapan bir ekip üyesi",
     width: 1200,
     height: 1500,
-    tone: "stone",
-    note: "Stüdyo anı, ekip ve ışık, sakin kompozisyon",
+    position: "50% 60%",
   } satisfies MediaImage,
 };
 
