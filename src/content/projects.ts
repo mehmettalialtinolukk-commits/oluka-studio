@@ -50,11 +50,10 @@ export const projects: Project[] = [
     categories: ["ugc-ai-ugc", "icerik-stratejisi", "sosyal-medya"],
     services: ["ugc-icerik-uretimi", "icerik-stratejisi"],
     cover: {
-      alt: "Gün ışığı alan bir oturma odasında ahşap sandalye ve keten kumaş",
+      src: "/portfolio/yavas-ev.jpg",
+      alt: "Gizli aydınlatmalı kemer nişi, ahşap detaylar ve bej modüler kanepeyle sade, sıcak tonlu bir oturma odası",
       width: 1200,
       height: 1500,
-      tone: "stone",
-      note: "İç mekân, sabah ışığı, doğal malzemeler",
     },
   },
   {
