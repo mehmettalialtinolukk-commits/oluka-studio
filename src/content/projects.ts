@@ -82,11 +82,10 @@ export const projects: Project[] = [
     categories: ["ugc-ai-ugc", "e-ticaret"],
     services: ["ai-ugc", "video-edit"],
     cover: {
-      alt: "Mermer bir yüzeyde cam şişeli cilt bakım ürünleri",
+      src: "/portfolio/rituel.jpg",
+      alt: "Beyaz mermer üzerinde siyah kapaklı iki buzlu cam krem kavanozu ve sicimle bağlanmış kuru lavanta demeti",
       width: 1800,
       height: 1200,
-      tone: "paper",
-      note: "Ürün still life, mermer, yumuşak gölge",
     },
   },
 ];
