@@ -122,7 +122,7 @@ export function SiteHeader({ navigation, cta, channels }: SiteHeaderProps) {
       className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,color,border-color] duration-(--duration-base) ease-editorial ${surface}`}
     >
       <div className="container-site flex h-header items-center justify-between gap-8">
-        <Link href="/" aria-label="OLUKA Studio ana sayfa" className="relative z-10 -my-2 py-2" data-menu-focus onClick={() => open && close(false)}>
+        <Link href="/" aria-label="OLUKA Studio ana sayfa" className="relative z-10 -my-2.5 py-2.5" data-menu-focus onClick={() => open && close(false)}>
           <Wordmark />
         </Link>
 

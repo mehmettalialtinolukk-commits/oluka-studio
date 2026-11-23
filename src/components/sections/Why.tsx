@@ -34,7 +34,7 @@ export function Why() {
 
         <div className="relative lg:col-span-6 lg:col-start-7">
           <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
-            <div aria-hidden="true" className="absolute -bottom-6 -left-6 h-2/3 w-2/3 bg-bordo lg:-bottom-10 lg:-left-10" />
+            <div aria-hidden="true" className="absolute -bottom-3 -left-3 h-2/3 w-2/3 bg-bordo sm:-bottom-6 sm:-left-6 lg:-bottom-10 lg:-left-10" />
             <EditorialImage image={image} sizes="(min-width: 1024px) 46vw, 92vw" className="relative w-full" />
           </div>
         </div>

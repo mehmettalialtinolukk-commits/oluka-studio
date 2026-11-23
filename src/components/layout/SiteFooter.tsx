@@ -24,7 +24,7 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
             <p className="mt-8 max-w-md text-lead text-mute-on-dark">{footer.tagline}</p>
             <Link
               href={primaryCta.href}
-              className="group mt-12 inline-flex items-center gap-4 border-b border-paper/40 pb-2 font-serif text-h4 transition-colors hover:border-paper"
+              className="group relative mt-12 inline-flex items-center gap-4 border-b border-paper/40 pb-2 font-serif text-h4 transition-colors hover:border-paper max-lg:after:absolute max-lg:after:inset-x-0 max-lg:after:-inset-y-1.5"
             >
               {primaryCta.label}
               <ArrowIcon />
@@ -38,10 +38,10 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
         <div className="mt-24 grid gap-12 border-t border-line-on-dark pt-12 sm:grid-cols-2 lg:grid-cols-12">
           <nav aria-label="Alt menü" className="lg:col-span-3">
             <p className="label-text text-mute-on-dark">Sayfalar</p>
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3 max-lg:mt-3 max-lg:space-y-0">
               {footerNavigation.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="hover:text-mute-on-dark">
+                  <Link href={item.href} className="hover:text-mute-on-dark max-lg:flex max-lg:min-h-11 max-lg:w-fit max-lg:items-center">
                     {item.label}
                   </Link>
                 </li>
@@ -52,10 +52,10 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
           {channels.length > 0 && (
             <div className="lg:col-span-3">
               <p className="label-text text-mute-on-dark">Bağlantı</p>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 space-y-3 max-lg:mt-3 max-lg:space-y-0">
                 {channels.map((c) => (
                   <li key={c.href}>
-                    <a href={c.href} {...externalProps(c.href)} className="hover:text-mute-on-dark">
+                    <a href={c.href} {...externalProps(c.href)} className="hover:text-mute-on-dark max-lg:flex max-lg:min-h-11 max-lg:w-fit max-lg:items-center">
                       {c.label}
                     </a>
                   </li>
@@ -66,10 +66,10 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
 
           <nav aria-label="Yasal" className="lg:col-span-3">
             <p className="label-text text-mute-on-dark">Yasal</p>
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3 max-lg:mt-3 max-lg:space-y-0">
               {legalNavigation.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="hover:text-mute-on-dark">
+                  <Link href={item.href} className="hover:text-mute-on-dark max-lg:flex max-lg:min-h-11 max-lg:w-fit max-lg:items-center">
                     {item.label}
                   </Link>
                 </li>
@@ -82,7 +82,7 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
           <p>
             © {year} {siteConfig.name}. Tüm hakları saklıdır.
           </p>
-          <a href="#top" className="label-text hover:text-paper">
+          <a href="#top" className="label-text relative hover:text-paper max-sm:self-start max-lg:after:absolute max-lg:after:-inset-x-2 max-lg:after:-inset-y-3.5">
             Başa dön
           </a>
         </div>
