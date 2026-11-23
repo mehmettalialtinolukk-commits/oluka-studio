@@ -68,7 +68,7 @@ export function GET() {
             <div key={i} style={{ display: "flex" }}>
               <span>{line.text.trimEnd()}</span>
               {line.emphasis && (
-                <span style={{ fontStyle: "italic", color: "rgba(245, 242, 236, 0.75)", marginLeft: "0.25em" }}>
+                <span style={{ fontStyle: "italic", color: "rgba(245, 242, 236, 0.88)", marginLeft: "0.25em" }}>
                   {line.emphasis}
                 </span>
               )}
