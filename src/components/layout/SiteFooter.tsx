@@ -30,17 +30,17 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
               <ArrowIcon />
             </Link>
           </div>
-          {/* Phones and tablets: below the brand copy, in the photo's own 2:3 ratio (no crop). Desktop keeps its frame. */}
+          {/* Phones: centred below the brand copy. Phones and tablets: the photo's own 2:3 ratio (no crop). Desktop keeps its frame. */}
           <div className="lg:col-span-3 lg:col-start-10">
             <EditorialImage
               image={footer.image}
-              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 60vw"
-              className="w-3/5 max-lg:aspect-[2/3]! sm:w-2/5 lg:mt-8 lg:w-full"
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, min(92vw, 18rem)"
+              className="max-lg:aspect-[2/3]! max-sm:mx-auto max-sm:w-full max-sm:max-w-72 sm:w-2/5 lg:mt-8 lg:w-full"
             />
           </div>
         </div>
 
-        <div className="mt-24 grid gap-12 border-t border-line-on-dark pt-12 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="mt-24 grid gap-12 border-t border-line-on-dark pt-12 max-sm:mt-16 sm:grid-cols-2 lg:grid-cols-12">
           <nav aria-label="Alt menü" className="lg:col-span-3">
             <p className="label-text text-mute-on-dark">Sayfalar</p>
             <ul className="mt-6 space-y-3 max-lg:mt-3 max-lg:space-y-0">
