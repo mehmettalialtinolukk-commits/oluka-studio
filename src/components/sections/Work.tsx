@@ -25,7 +25,7 @@ export function ProjectCard({
   const categoryNames = categories.filter((c) => project.categories.includes(c.slug)).map((c) => c.title);
 
   return (
-    <article className={`group reveal ${featured ? "grid items-end gap-10 lg:grid-cols-12 lg:gap-8" : ""}`}>
+    <article className={`group reveal ${featured ? "grid items-end gap-8 lg:grid-cols-12" : ""}`}>
       <div className={`overflow-hidden ${featured ? "lg:col-span-8" : ""}`}>
         <EditorialImage
           image={project.cover}
@@ -42,8 +42,8 @@ export function ProjectCard({
         </div>
         <h3 className={`mt-6 font-serif ${featured ? "text-h2" : "text-h3"}`}>{project.client ?? project.title}</h3>
         {project.client && <p className="mt-2 text-mute">{project.title}</p>}
-        <p className="mt-5 max-w-prose text-mute">{project.summary}</p>
-        <dl className="mt-8 grid gap-4 border-t border-line pt-6 text-sm sm:grid-cols-2">
+        <p className="mt-5 max-w-prose text-mute max-sm:mt-4 max-sm:leading-relaxed">{project.summary}</p>
+        <dl className="mt-8 grid gap-4 border-t border-line pt-6 text-sm sm:grid-cols-2 max-sm:gap-5 max-sm:text-[0.9375rem] max-sm:leading-relaxed">
           <div>
             <dt className="label-text text-mute">Kategori</dt>
             <dd className="mt-2">{categoryNames.join(", ")}</dd>

@@ -19,14 +19,19 @@ export function WorkFilter({ categories, items }: WorkFilterProps) {
   const visible = items.filter((item) => !active || item.categories.includes(active));
   const rest = visible.filter((item) => !item.featured);
   const chip = (selected: boolean) =>
-    `min-h-11 cursor-pointer border px-5 text-sm transition-colors duration-(--duration-base) ease-editorial ${
+    `min-h-11 shrink-0 cursor-pointer border px-5 text-sm transition-colors duration-(--duration-base) ease-editorial ${
       selected ? "border-ink bg-ink text-paper" : "border-line hover:border-ink"
     }`;
 
   return (
     <>
       {categories.length > 1 && (
-        <div role="group" aria-label="Kategoriye göre filtrele" className="mb-14 flex flex-wrap gap-2 lg:mb-20">
+        // Phones: one swipeable row that bleeds to the screen edges instead of three ragged rows.
+        <div
+          role="group"
+          aria-label="Kategoriye göre filtrele"
+          className="mb-12 flex gap-2 sm:mb-14 sm:flex-wrap lg:mb-20 max-sm:-mx-[var(--spacing-gutter)] max-sm:overflow-x-auto max-sm:px-[var(--spacing-gutter)] max-sm:[scrollbar-width:none] max-sm:[&::-webkit-scrollbar]:hidden"
+        >
           <button type="button" aria-pressed={active === null} className={chip(active === null)} onClick={() => setActive(null)}>
             Tümü
           </button>
@@ -40,7 +45,7 @@ export function WorkFilter({ categories, items }: WorkFilterProps) {
       <p className="sr-only" aria-live="polite">
         {visible.length} proje gösteriliyor
       </p>
-      <ul className="grid gap-x-8 gap-y-24 lg:grid-cols-12 lg:gap-y-32">
+      <ul className="grid gap-x-8 gap-y-20 sm:gap-y-24 lg:grid-cols-12 lg:gap-y-32">
         {visible.map((item) => (
           <li key={item.slug} className={item.featured ? "lg:col-span-12" : layoutFor(rest.indexOf(item), rest.length, item.landscape)}>
             {item.node}
