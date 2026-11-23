@@ -32,11 +32,12 @@ export const projects: Project[] = [
     services: ["reels-short-form-video", "sosyal-medya-tasarimlari", "icerik-stratejisi"],
     featured: true,
     cover: {
-      alt: "Sade bir stüdyoda yeni sezon kıyafetleriyle poz veren model",
+      src: "/portfolio/sessiz-sezon.jpg",
+      alt: "Gri stüdyo fonu önünde beyaz dik yakalı gömlek ve krem pantolonla, gözleri kapalı poz veren model",
       width: 1800,
       height: 1200,
-      tone: "sepia",
-      note: "Moda editoryal, nötr fon, yumuşak ışık",
+      // Portrait photo in a landscape frame: keep the face and shirt in view.
+      position: "50% 67%",
     },
   },
   {
