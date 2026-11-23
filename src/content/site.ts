@@ -57,3 +57,25 @@ export const pageSeo = {
     path: "/gizlilik-politikasi",
   },
 } satisfies Record<string, PageSeo>;
+
+/**
+ * E-mail addresses shown on the contact page (each one a mailto link).
+ * Project requests go through the contact form; its recipient is set in the
+ * environment (CONTACT_TO_EMAIL) and is deliberately not listed here.
+ */
+export const contactDirectory = {
+  general: {
+    label: "Genel İletişim",
+    email: "hello@oluka.com.tr",
+    description: "Her türlü soru, bilgi ve genel iletişim için.",
+  },
+  personal: {
+    label: "Kişisel İletişim",
+    emails: ["aozge@oluka.com.tr", "ali@oluka.com.tr", "ersoy@oluka.com.tr"],
+  },
+  projects: {
+    label: "Proje Talepleri",
+    description: "Proje talepleri ve fiyat danışmanlığı için formu doldurmanız yeterli.",
+    formLinkLabel: "Forma git",
+  },
+};
