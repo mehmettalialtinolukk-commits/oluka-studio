@@ -24,6 +24,8 @@ type HeroVideoProps = {
   mobileSrc: string;
   /** First frame of the video, shown while it loads and instead of it when motion is reduced or data saving is on. */
   poster: string;
+  /** Smaller copy of the poster for phones. */
+  mobilePoster: string;
 };
 
 /** True when the visitor asked for less motion or less data; the video is then never requested. */
@@ -43,19 +45,30 @@ function prefersStill(): boolean {
  * The file is chosen in the browser (720p on phones, 1080p elsewhere), so the
  * server HTML carries only the poster and nothing is downloaded for visitors
  * who prefer reduced motion or have data saving turned on.
+ *
+ * The poster is a high-priority <picture> behind the video rather than the
+ * video's poster attribute: that way it is requested early and phones get the
+ * smaller file. It is hidden once the video plays, so the logo scene's zoom-out
+ * never reveals it.
  */
-export function HeroVideo({ src, mobileSrc, poster }: HeroVideoProps) {
+export function HeroVideo({ src, mobileSrc, poster, mobilePoster }: HeroVideoProps) {
   const frameRef = useRef<HTMLDivElement>(null);
+  const posterRef = useRef<HTMLImageElement>(null);
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const frame = frameRef.current;
     const video = ref.current;
+    const posterImage = posterRef.current;
     const section = video?.closest("section");
     if (!frame || !video || !section) return;
     if (prefersStill()) return;
 
     let reframed = false;
+
+    const hidePoster = () => {
+      if (posterImage) posterImage.style.visibility = "hidden";
+    };
 
     // Scale and offset that fit the whole logo inside the cover crop and
     // centre it on the visible screen (the hero can be taller than the viewport).
@@ -91,6 +104,7 @@ export function HeroVideo({ src, mobileSrc, poster }: HeroVideoProps) {
     video.addEventListener("timeupdate", update);
     video.addEventListener("seeked", update);
     window.addEventListener("resize", onResize);
+    video.addEventListener("playing", hidePoster, { once: true });
 
     // Pick the file once; a later resize keeps the one already playing.
     video.src = window.matchMedia(MOBILE_QUERY).matches ? mobileSrc : src;
@@ -102,6 +116,8 @@ export function HeroVideo({ src, mobileSrc, poster }: HeroVideoProps) {
       video.removeEventListener("timeupdate", update);
       video.removeEventListener("seeked", update);
       window.removeEventListener("resize", onResize);
+      video.removeEventListener("playing", hidePoster);
+      if (posterImage) posterImage.style.visibility = "";
       section.removeAttribute("data-logo-scene");
       video.pause();
       video.removeAttribute("src");
@@ -113,10 +129,24 @@ export function HeroVideo({ src, mobileSrc, poster }: HeroVideoProps) {
     // The video box is the full 16:9 cover size (not object-cover), so zooming out reveals what the crop hid.
     // The clip hides the 1px black columns on the source's left and right edges once the logo scene shifts them into view.
     <div ref={frameRef} className="absolute inset-0 overflow-hidden transition-[background-color] duration-(--duration-slow) ease-editorial [container-type:size]">
+      {/* Same 16:9 cover box as the video below. */}
+      <picture>
+        <source media={MOBILE_QUERY} srcSet={mobilePoster} />
+        {/* Plain img (not next/image): the files are already sized and compressed, and <picture> picks the phone copy. */}
+        <img
+          ref={posterRef}
+          src={poster}
+          alt=""
+          width={1920}
+          height={1080}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute left-1/2 top-1/2 h-[max(100cqh,calc(100cqw*9/16))] w-[max(100cqw,calc(100cqh*16/9))] max-w-none -translate-x-1/2 -translate-y-1/2"
+        />
+      </picture>
       <video
         ref={ref}
         className="absolute left-1/2 top-1/2 h-[max(100cqh,calc(100cqw*9/16))] w-[max(100cqw,calc(100cqh*16/9))] max-w-none -translate-x-1/2 -translate-y-1/2 transition-transform [clip-path:inset(0_2px)] duration-(--duration-slow) ease-editorial"
-        poster={poster}
         autoPlay
         muted
         loop
