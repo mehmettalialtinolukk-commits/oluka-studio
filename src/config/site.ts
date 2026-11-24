@@ -55,11 +55,15 @@ export const siteConfig = {
     whatsapp: null as string | null,
   },
 
-  /** Data controller details for the KVKK notice. Filled in once known. */
+  /**
+   * Data controller for the KVKK notice and privacy policy. OLUKA Studio is not
+   * a company yet; the brand is run by a natural person. The postal address is
+   * not known yet: leave it null rather than guessing.
+   */
   legalEntity: {
-    title: null as string | null,
+    title: "Mehmet Ali Altınoluk",
     address: null as string | null,
-    email: null as string | null,
+    email: "kvkk@oluka.com.tr",
   },
 } as const;
 
