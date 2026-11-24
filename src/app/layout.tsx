@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { siteConfig } from "@/config/site";
@@ -60,6 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader navigation={mainNavigation} cta={primaryCta} channels={channels} />
         <main id="icerik">{children}</main>
         <SiteFooter channels={channels} />
+        <CookieConsent measurementId={siteConfig.analytics.gaMeasurementId} analyticsEnabled={siteConfig.analytics.enabled} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd([organizationJsonLd(services), websiteJsonLd()]) }}

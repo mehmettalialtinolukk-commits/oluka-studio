@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CookiePreferencesButton } from "@/components/layout/CookieConsent";
 import { ArrowIcon } from "@/components/ui/Button";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import { Wordmark } from "@/components/ui/Wordmark";
@@ -79,6 +80,9 @@ export function SiteFooter({ channels }: { channels: NavLink[] }) {
                   </Link>
                 </li>
               ))}
+              <li>
+                <CookiePreferencesButton className="hover:text-mute-on-dark max-lg:flex max-lg:min-h-11 max-lg:w-fit max-lg:items-center" />
+              </li>
             </ul>
           </nav>
         </div>

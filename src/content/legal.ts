@@ -56,7 +56,9 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "Çerezler",
       body: [
-        "Site şu anda analiz veya reklam amaçlı çerez kullanmamaktadır. Böyle bir araç eklendiğinde bu bölüm ve gerekli onay mekanizması güncellenecektir.",
+        "Sitede reklam amaçlı çerez kullanılmaz. Analiz çerezleri yalnızca izin vermeniz hâlinde kullanılır: Google Analytics 4 (Google), sayfaların nasıl ziyaret edildiğini toplu ve istatistiksel olarak görmemize yardımcı olur.",
+        "İzin vermediğiniz sürece Google Analytics yüklenmez ve analiz çerezi oluşturulmaz. Google sinyalleri ve reklam kişiselleştirme özellikleri kapalıdır; iletişim formuna yazdığınız bilgiler Google Analytics'e gönderilmez.",
+        "Tercihiniz tarayıcınızda saklanır. Kararınızı istediğiniz zaman sayfanın altındaki \"Çerez tercihleri\" bağlantısından değiştirebilirsiniz; izninizi geri aldığınızda analiz çerezleri silinir.",
       ],
     },
   ],

@@ -36,6 +36,16 @@ export const siteConfig = {
     Boolean(process.env.NEXT_PUBLIC_SITE_URL) &&
     (process.env.VERCEL_ENV ? process.env.VERCEL_ENV === "production" : process.env.NODE_ENV === "production"),
 
+  /**
+   * Google Analytics 4. It runs only after the visitor accepts analytics
+   * cookies, and only on the live site: preview and local builds show the
+   * cookie banner but send nothing to Google.
+   */
+  analytics: {
+    gaMeasurementId: "G-V2FWDPJJZ2",
+    enabled: process.env.VERCEL_ENV === "production",
+  },
+
   /** Public contact channels. `null` = not shown anywhere on the site. */
   contact: {
     email: null as string | null,
