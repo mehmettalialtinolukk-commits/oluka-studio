@@ -19,6 +19,15 @@ function resolveSiteUrl(): string {
   return "http://localhost:3000";
 }
 
+/**
+ * V1 launch switches. Both stay off until the corporate mailboxes and the
+ * Resend sending domain are verified and the legal texts are approved.
+ * - Contact form: while off, no e-mail is sent and the visitor is told the form is not active yet.
+ * - Google Analytics: while off, it never loads (even after consent, even on the live site).
+ */
+const CONTACT_FORM_SWITCHED_ON = false;
+const ANALYTICS_SWITCHED_ON = false;
+
 export const siteConfig = {
   name: "OLUKA Studio",
   /** Visual form of the name. The dot is decorative only. */
@@ -43,8 +52,11 @@ export const siteConfig = {
    */
   analytics: {
     gaMeasurementId: "G-V2FWDPJJZ2",
-    enabled: process.env.VERCEL_ENV === "production",
+    enabled: ANALYTICS_SWITCHED_ON && process.env.VERCEL_ENV === "production",
   },
+
+  /** Whether the contact form may send e-mail (see the launch switches above). */
+  contactFormLive: CONTACT_FORM_SWITCHED_ON,
 
   /** Public contact channels. `null` = not shown anywhere on the site. */
   contact: {

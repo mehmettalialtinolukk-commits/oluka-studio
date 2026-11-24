@@ -1,5 +1,7 @@
 import "server-only";
 
+import { siteConfig } from "@/config/site";
+
 import type { ContactValues } from "./schema";
 
 /**
@@ -17,7 +19,11 @@ import type { ContactValues } from "./schema";
 export type DeliveryResult = { ok: true } | { ok: false; reason: "not-configured" | "failed" };
 
 export function isContactDeliveryConfigured(): boolean {
-  return Boolean(process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL && process.env.RESEND_API_KEY);
+  // Off at launch (siteConfig.contactFormLive): nothing is sent even when the variables are set.
+  return (
+    siteConfig.contactFormLive &&
+    Boolean(process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL && process.env.RESEND_API_KEY)
+  );
 }
 
 function escapeHtml(value: string): string {
