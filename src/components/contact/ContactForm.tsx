@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { initialContactState, UNSURE_SERVICE, type ContactField } from "@/lib/contact/schema";
 
 const input =
-  "w-full border-0 border-b border-ink/30 bg-transparent px-0 py-3 text-base text-ink transition-colors duration-(--duration-fast) placeholder:text-mute/70 focus:border-bordo focus:outline-none aria-invalid:border-bordo-bright";
+  "w-full border-0 border-b border-ink/30 bg-transparent px-0 py-3 text-base text-ink transition-colors duration-(--duration-fast) placeholder:text-mute/70 disabled:cursor-not-allowed focus:border-bordo focus:outline-none aria-invalid:border-bordo-bright";
 
 function Field({
   id,
@@ -39,7 +39,12 @@ function Field({
   );
 }
 
-export function ContactForm({ services }: { services: string[] }) {
+/**
+ * While `available` is false (launch switch in site config) the form keeps its
+ * look but every field and the button are disabled, and a note above it says
+ * so before anyone starts typing. The server action refuses to send as well.
+ */
+export function ContactForm({ services, available }: { services: string[]; available: boolean }) {
   const [state, formAction, pending] = useActionState(submitContact, initialContactState);
   const errors = state.fieldErrors ?? {};
   const values = state.values ?? {};
@@ -55,118 +60,134 @@ export function ContactForm({ services }: { services: string[] }) {
   }
 
   return (
-    <form action={formAction} noValidate className="grid gap-10 sm:grid-cols-2 sm:gap-x-8">
-      <Field id="name" label="Ad Soyad" error={errors.name}>
-        <input
-          id="iletisim-name"
-          name="name"
-          autoComplete="name"
-          required
-          defaultValue={values.name}
-          aria-invalid={Boolean(errors.name)}
-          aria-describedby={describedBy("name")}
-          className={input}
-        />
-      </Field>
-      <Field id="company" label="Marka / Şirket" error={errors.company} optional>
-        <input
-          id="iletisim-company"
-          name="company"
-          autoComplete="organization"
-          defaultValue={values.company}
-          aria-invalid={Boolean(errors.company)}
-          aria-describedby={describedBy("company")}
-          className={input}
-        />
-      </Field>
-      <Field id="email" label="E-posta" error={errors.email}>
-        <input
-          id="iletisim-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          inputMode="email"
-          required
-          defaultValue={values.email}
-          aria-invalid={Boolean(errors.email)}
-          aria-describedby={describedBy("email")}
-          className={input}
-        />
-      </Field>
-      <Field id="service" label="İlgilenilen hizmet" error={errors.service}>
-        <select
-          id="iletisim-service"
-          name="service"
-          required
-          defaultValue={values.service ?? ""}
-          aria-invalid={Boolean(errors.service)}
-          aria-describedby={describedBy("service")}
-          className={`${input} cursor-pointer`}
-        >
-          <option value="" disabled>
-            Seçin
-          </option>
-          {services.map((s) => (
-            <option key={s}>{s}</option>
-          ))}
-          <option>{UNSURE_SERVICE}</option>
-        </select>
-      </Field>
-      <div className="sm:col-span-2">
-        <Field id="message" label="Mesajınız" error={errors.message}>
-          <textarea
-            id="iletisim-message"
-            name="message"
-            rows={5}
-            required
-            defaultValue={values.message}
-            aria-invalid={Boolean(errors.message)}
-            aria-describedby={describedBy("message")}
-            placeholder="Markanızı, hedeflerinizi ve zaman planınızı kısaca anlatın."
-            className={`${input} resize-y`}
-          />
-        </Field>
-      </div>
-
-      {/* Honeypot: hidden from people and assistive technology */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="iletisim-website">Web sitesi</label>
-        <input id="iletisim-website" name="website" tabIndex={-1} autoComplete="off" />
-      </div>
-
-      <div className="sm:col-span-2">
-        <label htmlFor="iletisim-consent" className="flex cursor-pointer items-start gap-4 text-sm text-mute">
-          <input
-            id="iletisim-consent"
-            name="consent"
-            type="checkbox"
-            required
-            aria-invalid={Boolean(errors.consent)}
-            aria-describedby={errors.consent ? "iletisim-consent-hata" : undefined}
-            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-bordo"
-          />
-          <span>
-            <Link href="/kvkk-aydinlatma-metni" className="text-ink underline underline-offset-4 hover:text-bordo">
-              KVKK Aydınlatma Metni
-            </Link>
-            &apos;ni okudum. Kişisel verilerimin bu talebe yanıt verilmesi amacıyla işlenmesini kabul ediyorum.
-          </span>
-        </label>
-        {errors.consent && (
-          <p id="iletisim-consent-hata" className="mt-2 text-sm text-bordo-bright">
-            {errors.consent}
-          </p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-5 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-        <p role="status" aria-live="polite" className={`text-sm ${state.status === "error" ? "text-bordo-bright" : "text-mute"}`}>
-          {state.status === "error" ? state.message : ""}
+    <>
+      {!available && (
+        <p id="iletisim-form-durumu" role="note" className="mb-10 border border-bordo/40 px-5 py-4 text-sm text-bordo">
+          İletişim formu geçici olarak hizmet dışıdır; kısa süre içinde yeniden kullanıma açılacaktır.
         </p>
-        <Button type="submit" arrow disabled={pending} className="sm:min-w-56">
-          {pending ? "Gönderiliyor…" : "Gönder"}
-        </Button>
-      </div>
-    </form>
+      )}
+      <form
+        action={formAction}
+        noValidate
+        onSubmit={available ? undefined : (event) => event.preventDefault()}
+        aria-describedby={available ? undefined : "iletisim-form-durumu"}
+        className="grid gap-10 sm:grid-cols-2 sm:gap-x-8"
+      >
+        {/* display: contents keeps the grid; disabling the fieldset disables every field and the button. */}
+        <fieldset disabled={!available} className="contents">
+          <Field id="name" label="Ad Soyad" error={errors.name}>
+            <input
+              id="iletisim-name"
+              name="name"
+              autoComplete="name"
+              required
+              defaultValue={values.name}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={describedBy("name")}
+              className={input}
+            />
+          </Field>
+          <Field id="company" label="Marka / Şirket" error={errors.company} optional>
+            <input
+              id="iletisim-company"
+              name="company"
+              autoComplete="organization"
+              defaultValue={values.company}
+              aria-invalid={Boolean(errors.company)}
+              aria-describedby={describedBy("company")}
+              className={input}
+            />
+          </Field>
+          <Field id="email" label="E-posta" error={errors.email}>
+            <input
+              id="iletisim-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              required
+              defaultValue={values.email}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={describedBy("email")}
+              className={input}
+            />
+          </Field>
+          <Field id="service" label="İlgilenilen hizmet" error={errors.service}>
+            <select
+              id="iletisim-service"
+              name="service"
+              required
+              defaultValue={values.service ?? ""}
+              aria-invalid={Boolean(errors.service)}
+              aria-describedby={describedBy("service")}
+              className={`${input} cursor-pointer`}
+            >
+              <option value="" disabled>
+                Seçin
+              </option>
+              {services.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+              <option>{UNSURE_SERVICE}</option>
+            </select>
+          </Field>
+          <div className="sm:col-span-2">
+            <Field id="message" label="Mesajınız" error={errors.message}>
+              <textarea
+                id="iletisim-message"
+                name="message"
+                rows={5}
+                required
+                defaultValue={values.message}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={describedBy("message")}
+                placeholder="Markanızı, hedeflerinizi ve zaman planınızı kısaca anlatın."
+                className={`${input} resize-y`}
+              />
+            </Field>
+          </div>
+
+          {/* Honeypot: hidden from people and assistive technology */}
+          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <label htmlFor="iletisim-website">Web sitesi</label>
+            <input id="iletisim-website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="iletisim-consent" className="flex cursor-pointer items-start gap-4 text-sm text-mute">
+              <input
+                id="iletisim-consent"
+                name="consent"
+                type="checkbox"
+                required
+                aria-invalid={Boolean(errors.consent)}
+                aria-describedby={errors.consent ? "iletisim-consent-hata" : undefined}
+                className="mt-0.5 size-5 shrink-0 cursor-pointer accent-bordo"
+              />
+              <span>
+                <Link href="/kvkk-aydinlatma-metni" className="text-ink underline underline-offset-4 hover:text-bordo">
+                  KVKK Aydınlatma Metni
+                </Link>
+                &apos;ni okudum. Kişisel verilerimin bu talebe yanıt verilmesi amacıyla işlenmesini kabul ediyorum.
+              </span>
+            </label>
+            {errors.consent && (
+              <p id="iletisim-consent-hata" className="mt-2 text-sm text-bordo-bright">
+                {errors.consent}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-5 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            <p role="status" aria-live="polite" className={`text-sm ${state.status === "error" ? "text-bordo-bright" : "text-mute"}`}>
+              {state.status === "error" ? state.message : ""}
+            </p>
+            <Button type="submit" arrow disabled={pending} className="sm:min-w-56">
+              {pending ? "Gönderiliyor…" : "Gönder"}
+            </Button>
+          </div>
+        </fieldset>
+      </form>
+    </>
   );
 }

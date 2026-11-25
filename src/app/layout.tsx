@@ -61,7 +61,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader navigation={mainNavigation} cta={primaryCta} channels={channels} />
         <main id="icerik">{children}</main>
         <SiteFooter channels={channels} />
-        <CookieConsent measurementId={siteConfig.analytics.gaMeasurementId} analyticsEnabled={siteConfig.analytics.enabled} />
+        {/* No banner while analytics is switched off: there is nothing to consent to. */}
+        {siteConfig.analytics.switchedOn && (
+          <CookieConsent measurementId={siteConfig.analytics.gaMeasurementId} analyticsEnabled={siteConfig.analytics.enabled} />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd([organizationJsonLd(services), websiteJsonLd()]) }}

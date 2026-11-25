@@ -20,12 +20,14 @@ function resolveSiteUrl(): string {
 }
 
 /**
- * V1 launch switches. Both stay off until the corporate mailboxes and the
+ * V1 launch switches. All stay off until the corporate mailboxes and the
  * Resend sending domain are verified and the legal texts are approved.
- * - Contact form: while off, no e-mail is sent and the visitor is told the form is not active yet.
- * - Google Analytics: while off, it never loads (even after consent, even on the live site).
+ * - Contact form: while off, the form is shown disabled with an out-of-service note and nothing is sent.
+ * - E-mail addresses: while off, they are shown as plain text (no mailto) with a "not active yet" note.
+ * - Google Analytics: while off, it never loads and the cookie banner and footer link are hidden.
  */
 const CONTACT_FORM_SWITCHED_ON = false;
+const EMAIL_SWITCHED_ON = false;
 const ANALYTICS_SWITCHED_ON = false;
 
 export const siteConfig = {
@@ -52,11 +54,15 @@ export const siteConfig = {
    */
   analytics: {
     gaMeasurementId: "G-V2FWDPJJZ2",
+    /** Launch switch: false hides the cookie banner and never loads GA. */
+    switchedOn: ANALYTICS_SWITCHED_ON,
     enabled: ANALYTICS_SWITCHED_ON && process.env.VERCEL_ENV === "production",
   },
 
   /** Whether the contact form may send e-mail (see the launch switches above). */
   contactFormLive: CONTACT_FORM_SWITCHED_ON,
+  /** Whether the published e-mail addresses receive mail yet (see the launch switches above). */
+  emailLive: EMAIL_SWITCHED_ON,
 
   /** Public contact channels. `null` = not shown anywhere on the site. */
   contact: {

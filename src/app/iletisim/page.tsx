@@ -1,5 +1,6 @@
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ArrowIcon } from "@/components/ui/Button";
+import { siteConfig } from "@/config/site";
 import { contactDirectory, pageSeo } from "@/content/site";
 import { getContactChannels } from "@/lib/channels";
 import { getServices } from "@/lib/content";
@@ -7,6 +8,21 @@ import { externalProps } from "@/lib/links";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata(pageSeo.contact);
+
+/** Shared look of the out-of-service notes (same style as the legal pages' draft note). */
+const noteClass = "border border-bordo/40 px-5 py-4 text-sm text-bordo";
+
+/** A mailto link once the mailboxes are live; until then the same text without a link. */
+function EmailAddress({ email, className }: { email: string; className: string }) {
+  if (siteConfig.emailLive) {
+    return (
+      <a href={`mailto:${email}`} className={`${className} transition-colors duration-(--duration-base) ease-editorial hover:text-bordo`}>
+        {email}
+      </a>
+    );
+  }
+  return <span className={className}>{email}</span>;
+}
 
 export default async function ContactPage() {
   const services = await getServices();
@@ -29,14 +45,17 @@ export default async function ContactPage() {
           </p>
 
           {/* E-mail directory: the general address leads, personal addresses stay quieter. */}
-          <div className="mt-14 border-t border-line pt-8">
+          {!siteConfig.emailLive && (
+            <p role="note" className={`mt-14 ${noteClass}`}>
+              E-posta adreslerimiz henüz aktif değildir; kısa süre içinde kullanıma açılacaktır.
+            </p>
+          )}
+          <div className={`${siteConfig.emailLive ? "mt-14" : "mt-8"} border-t border-line pt-8`}>
             <p className="label-text text-mute">{general.label}</p>
-            <a
-              href={`mailto:${general.email}`}
-              className="mt-3 inline-flex min-h-11 items-center break-all font-serif text-h3 transition-colors duration-(--duration-base) ease-editorial hover:text-bordo"
-            >
-              {general.email}
-            </a>
+            <EmailAddress
+              email={general.email}
+              className="mt-3 inline-flex min-h-11 items-center break-all font-serif text-h3"
+            />
             <p className="mt-2 max-w-[38ch] text-mute">{general.description}</p>
           </div>
 
@@ -46,12 +65,7 @@ export default async function ContactPage() {
               <ul className="mt-3">
                 {personal.emails.map((email) => (
                   <li key={email}>
-                    <a
-                      href={`mailto:${email}`}
-                      className="inline-flex min-h-11 items-center transition-colors duration-(--duration-base) ease-editorial hover:text-bordo"
-                    >
-                      {email}
-                    </a>
+                    <EmailAddress email={email} className="inline-flex min-h-11 items-center" />
                   </li>
                 ))}
               </ul>
@@ -87,7 +101,7 @@ export default async function ContactPage() {
 
         {/* scroll-mt: the "Forma git" link leaves some air under the fixed header. */}
         <div id="iletisim-formu" className="relative scroll-mt-8 lg:col-span-6 lg:col-start-7 lg:pt-4">
-          <ContactForm services={services.map((s) => s.title)} />
+          <ContactForm services={services.map((s) => s.title)} available={siteConfig.contactFormLive} />
         </div>
       </div>
     </section>
